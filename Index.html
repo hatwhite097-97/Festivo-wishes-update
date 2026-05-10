@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak Premium - With Music</title>
+    
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2274/2274813.png">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-gold: #d4af37;
+            --soft-gold: #f4e4bc;
+            --bg-cream: #fdfaf4;
+            --text-dark: #3e2723;
+            --glass: rgba(255, 255, 255, 0.9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://d.uguu.se/JVsKFZBD.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Music Floating Button */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--glass);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid var(--primary-gold);
+        }
+        .music-control i { color: var(--primary-gold); font-size: 1.2rem; }
+        .music-control.playing i { animation: rotate 3s linear infinite; }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .full-page {
+            min-height: 100vh;
+            background: rgba(253, 250, 244, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        nav { width: 100%; max-width: 1000px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; z-index: 10; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text-dark); font-weight: 700; }
+
+        .content-wrapper {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            width: 100%;
+            max-width: 600px;
+            border-radius: 50px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+            z-index: 10;
+        }
+
+        h1 { font-family: 'Amiri', serif; font-size: 3.5rem; color: var(--primary-gold); margin-bottom: 10px; line-height: 1.1; }
+        p.intro { font-size: 0.9rem; color: #7f8c8d; letter-spacing: 1px; margin-bottom: 30px; }
+
+        .input-group { margin-bottom: 25px; text-align: left; }
+        .input-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--primary-gold); margin-left: 15px; margin-bottom: 8px; text-transform: uppercase; }
+        
+        input {
+            width: 100%;
+            padding: 18px 25px;
+            border-radius: 40px;
+            border: none;
+            background: white;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #d4af37 0%, #b38728 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 40px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(179, 135, 40, 0.3);
+            margin-top: 10px;
+        }
+
+        #display-section { display: none; text-align: left; animation: fadeIn 0.8s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .typing-box { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--primary-gold); text-align: center; margin-bottom: 30px; }
+        .message-content { background: rgba(255,255,255,0.6); padding: 25px; border-radius: 30px; margin-bottom: 25px; }
+        .arabic-text { font-family: 'Amiri', serif; font-size: 1.6rem; text-align: right; color: var(--text-dark); line-height: 1.6; margin-bottom: 20px; }
+
+        .share-wa {
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 20px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .seo-section { max-width: 800px; margin-top: 60px; text-align: center; color: #5d4037; padding-bottom: 100px; }
+    </style>
+</head>
+<body onclick="playMusic()">
+
+    <!-- Audio Element -->
+    <audio id="eidAudio" loop>
+        <source src="https://o.uguu.se/sdMmvhVt.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music FAB -->
+    <div class="music-control" id="musicToggle" onclick="toggleMusic(event)">
+        <i class="fas fa-music"></i>
+    </div>
+
+    <div class="full-page">
+        <nav>
+            <div class="logo">EID LUXURY</div>
+            <div style="font-size: 0.8rem; color: var(--primary-gold); font-weight: bold;">🔊 MUSIC ON</div>
+        </nav>
+
+        <div class="content-wrapper">
+            
+            <div id="form-section">
+                <h1>Eid Mubarak</h1>
+                <p class="intro">~ SALAMU ZENYE MVUTO NA MUZIKI ~</p>
+
+                <div class="input-group">
+                    <label>Jina lako</label>
+                    <input type="text" id="sender" placeholder="Andika jina lako hapa...">
+                </div>
+
+                <div class="input-group">
+                    <label>Jina la Rafiki</label>
+                    <input type="text" id="receiver" placeholder="Andika jina la rafiki...">
+                </div>
+
+                <button class="btn-gold" onclick="createBlessing()">Tengeneza Salamu ✨</button>
+            </div>
+
+            <div id="display-section">
+                <div id="typing" class="typing-box"></div>
+                
+                <div class="message-content">
+                    <p class="arabic-text" id="ar-out"></p>
+                    <p style="font-size: 1rem; line-height: 1.8; color: #444;" id="en-out"></p>
+                    <p style="font-size: 1rem; line-height: 1.8; color: #444; margin-top: 20px;" id="sw-out"></p>
+                </div>
+
+                <a href="#" id="waLink" class="share-wa">
+                    <i class="fa-brands fa-whatsapp"></i> Tuma kwa WhatsApp
+                </a>
+
+                <button onclick="location.reload()" style="background:none; border:none; color:var(--primary-gold); margin-top:30px; cursor:pointer; width:100%; font-weight:700; text-decoration: underline;">
+                    ⬅ Tengeneza nyingine
+                </button>
+            </div>
+        </div>
+
+        <div class="seo-section">
+            <h2>Karibu kwenye Ulimwengu wa Salamu za Eid</h2>
+            <p>Hapa tunasherehekea kwa namna ya kipekee. Sikiliza sauti nyororo ya Eid wakati ukitengeneza kadi yako maalum. Mwenyezi Mungu akujalie Eid njema yenye mafanikio, amani na upendo tele. Shiriki furaha hii na ulimwengu kwa kugusa kitufe cha WhatsApp.</p>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('eidAudio');
+        const musicBtn = document.getElementById('musicToggle');
+        let hasPlayed = false;
+
+        // Function ya kuanza muziki mara ya kwanza mtu akigusa kioo
+        function playMusic() {
+            if (!hasPlayed) {
+                audio.play();
+                musicBtn.classList.add('playing');
+                hasPlayed = true;
+            }
+        }
+
+        // Kuzima na kuwasha muziki
+        function toggleMusic(event) {
+            event.stopPropagation(); // Inazuia playMusic isirudie
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('playing');
+            } else {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+            }
+        }
+
+        function createBlessing() {
+            const s = document.getElementById('sender').value;
+            const r = document.getElementById('receiver').value;
+
+            if(!s || !r) {
+                alert("Tafadhali jaza majina yote mawili!");
+                return;
+            }
+
+            // Play music kama bado haijaanza
+            playMusic();
+
+            document.getElementById('form-section').style.display = 'none';
+            document.getElementById('display-section').style.display = 'block';
+
+            const ar = `إلى ${r}، بمناسبة عيد الفطر السعيد، يبعث لك ${s} أحر التهاني وأجمل التبريكات. سائلين المولى عز وجل أن يتقبل منكم الطاعات.`;
+            const en = `Dear ${r}, on this blessed Eid, ${s} wishes you a life filled with golden opportunities and divine happiness. Eid Mubarak!`;
+            const sw = `Kwa rafiki yangu ${r}, katika siku hii ya kheri, ${s} anakutakia maisha yenye baraka tere na afya imara. Eid Mubarak!`;
+
+            document.getElementById('ar-out').innerText = ar;
+            document.getElementById('en-out').innerText = en;
+            document.getElementById('sw-out').innerText = sw;
+
+            let i = 0;
+            const txt = `${s} anakutakia...`;
+            function typeWriter() {
+                if (i < txt.length) {
+                    document.getElementById("typing").innerHTML += txt.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            typeWriter();
+
+            const currentUrl = window.location.href.split('?')[0];
+            const waText = `*${s}* amekutumia salamu ya *Eid Mubarak* yenye muziki! 🌙✨\nFungua hapa uisome:\n${currentUrl}?f=${encodeURIComponent(s)}&t=${encodeURIComponent(r)}`;
+            document.getElementById('waLink').href = `https://wa.me/?text=${encodeURIComponent(waText)}`;
+        }
+
+        window.onload = function() {
+            const p = new URLSearchParams(window.location.search);
+            if(p.get('f') && p.get('t')) {
+                document.getElementById('sender').value = p.get('f');
+                document.getElementById('receiver').value = p.get('t');
+                createBlessing();
+            }
+        }
+    </script>
+</body>
+</html>
